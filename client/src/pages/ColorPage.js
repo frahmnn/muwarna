@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import './ColorPage.css';
+import BackButton from '../components/BackButton';
 
 const API_URL = process.env.REACT_APP_API_URL || window.location.origin;
 
-function ColorPage({ color, colorName }) {
+function ColorPage({ color, colorName, onBack }) {
   const { selectedProfile } = useAuth();
   const colorKey = colorName?.toLowerCase();
   
@@ -108,6 +109,11 @@ function ColorPage({ color, colorName }) {
   return (
     <div className="color-page" style={{ background: color.gradient }}>
       <div className="color-content">
+        {typeof onBack === 'function' ? (
+          <div style={{ marginBottom: '12px' }}>
+            <BackButton onBack={onBack} />
+          </div>
+        ) : null}
         <h1 className="color-title">{colorName} 🎨</h1>
         
         {/* Color Objects Learning Game */}

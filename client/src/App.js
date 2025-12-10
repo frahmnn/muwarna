@@ -52,7 +52,7 @@ function AppContent() {
     return (
       <div className="App">
         <Navbar onAdminClick={() => setShowAdminPage(false)} />
-        <AdminPage />
+        <AdminPage onBack={() => setShowAdminPage(false)} />
       </div>
     );
   }
@@ -70,7 +70,7 @@ function AppContent() {
     return (
       <div className="App">
         <Navbar onAdminClick={() => setShowAdminPage(true)} />
-        <ColorPage color={selectedColor} colorName={selectedColor.name} />
+        <ColorPage color={selectedColor} colorName={selectedColor.name} onBack={() => setSelectedColor(null)} />
       </div>
     );
   }

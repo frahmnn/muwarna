@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ProfileSelector.css';
+import BackButton from './BackButton';
+import { useAuth } from '../context/AuthContext';
 
 const API_URL = process.env.REACT_APP_API_URL || window.location.origin;
 
 function ProfileSelector({ onSelectProfile }) {
+  const { logout } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
@@ -115,6 +118,9 @@ function ProfileSelector({ onSelectProfile }) {
   return (
     <div className="profile-selector-container">
       <div className="profile-selector-card">
+        <div style={{ marginBottom: '12px' }}>
+          <BackButton onBack={() => logout()} />
+        </div>
         <h1>Select Your Profile</h1>
         <p className="subtitle">Choose a save slot to continue</p>
 

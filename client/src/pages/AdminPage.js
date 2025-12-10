@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminPage.css';
+import BackButton from '../components/BackButton';
 
 const API_URL = process.env.REACT_APP_API_URL || window.location.origin;
 
-function AdminPage() {
+function AdminPage({ onBack }) {
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -99,6 +100,9 @@ function AdminPage() {
   return (
     <div className="admin-page">
       <div className="admin-container">
+        <div style={{ marginBottom: '12px' }}>
+          <BackButton onBack={onBack} />
+        </div>
         <h1 className="admin-title">Admin Dashboard</h1>
 
         {/* Statistics Cards */}
