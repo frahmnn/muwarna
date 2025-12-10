@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import './MiniGame.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || window.location.origin;
 
 function MiniGame({ onBack }) {
   const { selectedProfile } = useAuth();
@@ -113,7 +113,7 @@ function MiniGame({ onBack }) {
           if (selectedProfile?._id) {
             const token = localStorage.getItem('token');
             axios.put(
-              `http://localhost:5000/api/profiles/${selectedProfile._id}`,
+              `${API_URL}/api/profiles/${selectedProfile._id}`,
               { minigameCompleted: true },
               { headers: { Authorization: `Bearer ${token}` } }
             ).catch(err => console.error('Failed to save minigame completion:', err));

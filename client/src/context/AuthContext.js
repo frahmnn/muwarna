@@ -1,7 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// Prefer an explicit API URL from build-time env, otherwise use the current page origin.
+const API_URL = process.env.REACT_APP_API_URL || window.location.origin;
 
 const AuthContext = createContext();
 
@@ -49,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = () => {
-    // Redirect to Google OAuth
+    // Redirect to Google OAuth on the API host (uses current origin if not configured)
     window.location.href = `${API_URL}/auth/google`;
   };
 
@@ -58,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setSelectedProfile(null);
     // Optionally call backend logout endpoint
-    fetch('http://localhost:5000/auth/logout', {
+    fetch(`${API_URL}/auth/logout`, {
       credentials: 'include'
     });
   };

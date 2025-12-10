@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminPage.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || window.location.origin;
 
 function AdminPage() {
   const [users, setUsers] = useState([]);
@@ -24,8 +24,8 @@ function AdminPage() {
         axios.get(`${API_URL}/api/admin/stats`, { headers })
       ]);
 
-      setUsers(usersRes.data);
-      setStats(statsRes.data);
+      setUsers(usersResponse.data);
+      setStats(statsResponse.data);
       setLoading(false);
     } catch (err) {
       console.error('Failed to fetch admin data:', err);
@@ -42,7 +42,7 @@ function AdminPage() {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:5000/api/admin/users/${userId}/toggle-admin`,
+        `${API_URL}/api/admin/users/${userId}/toggle-admin`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -62,7 +62,7 @@ function AdminPage() {
     try {
       const token = localStorage.getItem('token');
       await axios.delete(
-        `http://localhost:5000/api/admin/users/${userId}`,
+        `${API_URL}/api/admin/users/${userId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
