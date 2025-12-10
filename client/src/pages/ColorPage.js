@@ -37,17 +37,19 @@ function ColorPage({ color, colorName }) {
   const [completedObjects, setCompletedObjects] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  // TTS function to speak object name in Indonesian
-  const speakObjectName = (name) => {
+  // TTS function to speak object name and its color in Indonesian
+  // If `colorLabel` is provided, speak "<name>, warnanya <colorLabel>".
+  const speakObjectName = (name, colorLabel) => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      
-      const utterance = new SpeechSynthesisUtterance(name);
+
+      const text = colorLabel ? `${name}, warnanya ${colorLabel}` : name;
+      const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'id-ID';
       utterance.rate = 1;
       utterance.pitch = 1;
       utterance.volume = 1;
-      
+
       window.speechSynthesis.speak(utterance);
     }
   };
@@ -57,7 +59,7 @@ function ColorPage({ color, colorName }) {
     if (!completedObjects.includes(currentObjectIndex)) {
       setHasBeenHovered(true);
     }
-    speakObjectName(currentObjects[currentObjectIndex].name);
+    speakObjectName(currentObjects[currentObjectIndex].name, colorName);
   };
 
   const handleNextObject = () => {
